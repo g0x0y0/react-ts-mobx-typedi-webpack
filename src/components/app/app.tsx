@@ -33,27 +33,28 @@ const RecipeReviewCard: FC<AppProps> = observer(({ model }) => {
 				<IconButton onClick={() => model.addToFavorite()}>
 					<FavoriteIcon htmlColor={model.isFavorite ? 'red' : ''} />
 				</IconButton>
-				<IconButton onClick={() => model.loadImage()}>
+			</CardActions>
+			<select style={{ marginRight: 10 }} onChange={(event: ChangeEvent<HTMLSelectElement>) => (model.locale = event.target.value)}>
+				{model.languages.map(({ name, value }) => (
+					<option key={name} value={value}>
+						{name}
+					</option>
+				))}
+			</select>
+			<select onChange={(event: ChangeEvent<HTMLSelectElement>) => model.setTypeAnimal(event.target.value)}>
+				{Object.keys(model.animals).map((name) => (
+					<option key={name} value={model.animals[name].value}>
+						{model.lang.app.animals[name]}
+					</option>
+				))}
+			</select>
+			<CardContent>
+				<IconButton color="primary" onClick={() => model.loadImage()}>
+					{model.lang.app.next}
 					<Tooltip title={model.lang.app.next}>
-						<ImageSearch style={{ fontSize: 40 }} />
+						<ImageSearch style={{ fontSize: 30 }} />
 					</Tooltip>
 				</IconButton>
-				<select onChange={(event: ChangeEvent<HTMLSelectElement>) => (model.locale = event.target.value)}>
-					{model.languages.map(({ name, value }) => (
-						<option key={name} value={value}>
-							{name}
-						</option>
-					))}
-				</select>
-				<select onChange={(event: ChangeEvent<HTMLSelectElement>) => model.setTypeAnimal(event.target.value)}>
-					{Object.keys(model.animals).map((name) => (
-						<option key={name} value={model.animals[name].value}>
-							{model.lang.app.animals[name]}
-						</option>
-					))}
-				</select>
-			</CardActions>
-			<CardContent>
 				<Typography variant="body2" color="text.secondary">
 					<Timer />
 					<br />
