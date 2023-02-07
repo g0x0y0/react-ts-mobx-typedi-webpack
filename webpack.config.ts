@@ -59,6 +59,7 @@ const config = (env: any, cfg: any) => {
 		devServer: {
 			port: 8008,
 			open: false,
+			allowedHosts: 'all',
 			proxy: {
 				'/random/**': {
 					target: 'https://some-random-api.ml',
