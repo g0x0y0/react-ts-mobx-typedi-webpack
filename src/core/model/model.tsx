@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import React, { createElement, useLayoutEffect } from 'react';
+import React, { createElement, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Model } from '.';
 
@@ -15,7 +15,7 @@ export const model = ({ model, ReactComponent }: ModelProps) => {
 	}
 	return (() => {
 		const component = (props: any) => {
-			useLayoutEffect(() => () => model.disconnectModel(), []);
+			useEffect(() => () => model.disconnectModel(), []);
 			return createElement(observer(ReactComponent), { ...props, model });
 		};
 		/** Определить имя для компонента, например - AppReactModelComponent @see {@link componentName} */

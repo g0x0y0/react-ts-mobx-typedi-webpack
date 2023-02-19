@@ -25,38 +25,21 @@ export const DefineMethods = (...models: string[]): Function => {
 				models.forEach((model: string) => {
 					const modelInstance: any = Container.get(model);
 					Object.keys(modelInstance).forEach((method) => {
-						if (method[0] === '_') {
-							Object.defineProperty(
-								this,
-								method,
-								typeof modelInstance[method] === 'function'
-									? { value: modelInstance[method], configurable: false, enumerable: false }
-									: {
-											get: () => modelInstance[method],
-											set: (...args) => {
-												modelInstance[method] = args;
-											},
-											configurable: false,
-											enumerable: false,
-									  }
-							);
-						}
-						if (method[0] !== '_') {
-							Object.defineProperty(
-								this,
-								method,
-								typeof modelInstance[method] === 'function'
-									? { value: modelInstance[method], configurable: true, enumerable: true }
-									: {
-											get: () => modelInstance[method],
-											set: (...args) => {
-												modelInstance[method] = args;
-											},
-											configurable: true,
-											enumerable: true,
-									  }
-							);
-						}
+						const isEncapsulation = method[0] === '_';
+						Object.defineProperty(
+							this,
+							method,
+							typeof modelInstance[method] === 'function'
+								? { value: modelInstance[method], configurable: !isEncapsulation, enumerable: !isEncapsulation }
+								: {
+										get: () => modelInstance[method],
+										set: (...args) => {
+											modelInstance[method] = args;
+										},
+										configurable: !isEncapsulation,
+										enumerable: !isEncapsulation,
+								  }
+						);
 					});
 				});
 			}
@@ -64,7 +47,7 @@ export const DefineMethods = (...models: string[]): Function => {
 	};
 };
 
-/** @see {@link https://www.typescriptlang.org/docs/handbook/mixins.html} */
+/** @see {@link  'https://www.typescriptlang.org/docs/handbook/mixins.html'} */
 
 export function ApplyMixins(...constructors: any[]) {
 	return (constructor: any) => {

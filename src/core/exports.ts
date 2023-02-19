@@ -22,7 +22,7 @@ export default Object.entries<IApplication>({
 
 /** Перечисление всех существующих экспортированных реакт элементов
  * которые должны инициализироваться вместе с пропсом model
- * этот объект экспортируется и дальше обрабатывается в ./index.ts функцией model @see ./model
+ * этот объект экспортируется и дальше обрабатывается в ./index.ts функцией model @see {@link './model'}
  */
 // prettier-ignore
 // export default {
